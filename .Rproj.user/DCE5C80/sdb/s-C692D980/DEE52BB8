@@ -1,0 +1,21 @@
+{
+    "collab_server" : "",
+    "contents" : "library(readr)\nteas <- read_csv(\"https://docs.google.com/spreadsheets/d/1tm4S4geHm5WgGJ4NXbdN8MdWRoYzsQXRb5fhgzvtOyE/pub?output=csv\")\nteas$tracts_list <- strsplit(teas$tracts, \", \")\nteas$selector <- paste0(teas$project_address, \" (\", teas$date, \")\")\nstate_list <- unique(teas$state)\n",
+    "created" : 1499370331782.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1033924374",
+    "id" : "DEE52BB8",
+    "lastKnownWriteTime" : 1499370361,
+    "last_content_update" : 1499370361331,
+    "path" : "~/Documents/Github/2017/07/tea_explorer/global.R",
+    "project_path" : "global.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
