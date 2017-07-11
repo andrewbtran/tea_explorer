@@ -10,11 +10,12 @@ library(tidycensus)
 library(tigris)
 #library(censusapi)
 #source("key.R")
+library(rgdal)
 library(tidyverse)
 library(ggmap)
 library(viridis)
 
-census_api_key(key)
+#census_api_key(key)
 
 shinyServer(function(input, output) {
 
@@ -71,15 +72,15 @@ shinyServer(function(input, output) {
     
     #state_map <- tracts(state_abb, cb=F)
     state_map <- fortify(state_map, region="GEOID")
-    state_map <- left_join(state_map, unemployment)
-    state_map <- filter(state_map, !is.na(per_un))
+    tract_map <- left_join(state_map, unemployment)
+    tract_map <- filter(tract_map, !is.na(per_un))
     
     #addy <- geocode(location=single_proj$project_address, output="latlon", source="google")
     #location <- c(addy$lat, addy$lon)
     
     map <- ggplot()
-    #nj_map <- nj_map + geom_polygon(data=nj_hf, aes(x=long, y=lat, group=group), fill=NA, color="black", size=.1)
-    map <- map + geom_polygon(data=state_map, aes(x=long, y=lat, group=group, fill=per_un), color="black", size=.5)
+    map <- map + geom_polygon(data=state_map, aes(x=long, y=lat, group=group), fill=NA, color="black", size=.1)
+    map <- map + geom_polygon(data=tract_map, aes(x=long, y=lat, group=group, fill=per_un), color="black", size=.5)
     #nj_map <- nj_map + facet_wrap(~year)
     map <- map + coord_map() 
     map <- map + scale_fill_viridis(option = "inferno", direction=-1, name = "Unemployment rate")
