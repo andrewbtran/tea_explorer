@@ -3,3 +3,4 @@ teas <- read_csv("https://docs.google.com/spreadsheets/d/1tm4S4geHm5WgGJ4NXbdN8M
 teas$tracts_list <- strsplit(teas$tracts, ", ")
 teas$selector <- paste0(teas$project_address, " (", teas$date, ")")
 state_list <- unique(teas$state)
+states_counties_tracts <- read_csv("states_counties_tracts.csv")
