@@ -20,18 +20,30 @@ library(viridis)
 shinyServer(function(input, output) {
 
   output$choose_proj <- renderUI({
+   
     state_abb <- input$state 
+    
     proj_list <- filter(teas, state==state_abb)
     
     selectInput("project", "Choose a project:", 
                 choices = proj_list$selector)
+    
   })
   
   
   output$Plot <- renderPlot({
-    state_abb <- input$state 
     
+    if (is.na(input$state) || is.null(input$state)) {
+      state_abb <- teas$state[1]
+    } else {
+    state_abb <- input$state 
+    }
+    
+    if (is.na(input$project) || is.null(input$project))  {
+      proj_name <- teas$selector[1]
+    } else {
     proj_name <- input$project
+    }
     #filter(teas, selector==proj_name)
     
     #unemployment <- get_acs(geography="tract", endyear=2015, variables= c("B23025_005E", "B23025_002E"),  state=state_abb)
@@ -102,7 +114,13 @@ shinyServer(function(input, output) {
   
   
   output$table <- renderDataTable({
-    proj_name <- input$project
+
+    if (is.na(input$project) || is.null(input$project))  {
+      proj_name <- teas$selector[1]
+    } else {
+      proj_name <- input$project
+    }
+    
     filter(teas, selector==proj_name)
 
     single_proj <- filter(teas, selector==proj_name)
